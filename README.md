@@ -1,6 +1,6 @@
-# Device Flow
+# Dev portal sample app for Device code flow.
 
-This sample shows how to use the openid-client for Node.js to:
+This sample shows how to use the openid-client library with Node.js to:
 - Authenticate a user via openid-client using the the device flow authorization grant type.
 - Successfully make an API request to `userinfo` endpoint to return the authenticated users details.
 
