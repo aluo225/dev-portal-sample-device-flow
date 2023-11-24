@@ -18,6 +18,10 @@ This sample shows how to use the openid-client library with Node.js to:
 
 ![screenshot](screenshot.png)
 
+## Troubleshooting
+- CLI displaying `npm ERR! code E401` when trying to run `npm install`. Delete the package-lock.json file and run `npm install` again.
+
+
 ## License
 
 The MIT License (MIT)
