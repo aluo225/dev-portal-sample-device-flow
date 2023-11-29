@@ -12,10 +12,10 @@
       "name": "Truman Butterworth",
       "email": "trbutter@au1.ibm.com"
     },
-		{
-			"name": "Yu Guo",
-			"email": "yu.guo@ibm.com"
-		}
+    {
+      "name": "Yu Guo",
+      "email": "yu.guo@ibm.com"
+    }
   ],
   "license": "MIT",
   "dependencies": {
@@ -25,6 +25,7 @@
     "node-persist": "^3.0.5",
     "openid-client": "5.4.3",
     "pug": "^3.0.2",
+    "qrcode": "^1.5.3",
     "socket.io": "^2.4.1"
   }
 }

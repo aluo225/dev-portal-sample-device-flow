@@ -23,6 +23,7 @@ const path = require("path");
 const { Issuer } = require("openid-client");
 const session = require("express-session");
 const storage = require("node-persist");
+const QRCode = require('qrcode')
 
 const app = express();
 app.use(
@@ -49,12 +50,21 @@ async function setupOIDC() {
   const issuer = await Issuer.discover(
     process.env.TENANT_URL
   );
+
   const client = new issuer.Client({
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
   });
 
   return client;
+}
+
+async function generateQR(text) {
+  try {
+    return await QRCode.toDataURL(text)
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 const verifyToken = async (req, res, next) => {
@@ -83,21 +93,15 @@ setupOIDC()
       };
 
       const deviceCodeResponse = await client.deviceAuthorization(params);
-
       // set session variables
       req.session.deviceCode = deviceCodeResponse.device_code;
-      req.session.userCode = deviceCodeResponse.user_code;
-      console.log("========= req.session.deviceCode", req.session);
-
-      // io.emit("authInfo", {
-      //   deviceCode: deviceCodeResponse.device_code,
-      //   userCode: deviceCodeResponse.user_code,
-      // });
-      //send url to client
+      req.session.userCode = deviceCodeResponse.user_code;      
+      const qrCodeComplete = await generateQR(deviceCodeResponse.verification_uri_complete);
       res.render("authorize", {
         userCode: deviceCodeResponse.user_code,
         verificationUri: deviceCodeResponse.verification_uri,
         qrCode: deviceCodeResponse.verification_uri_complete,
+        qrCodeComplete: qrCodeComplete
       });
       // start polling for authentication status
       pollAuthenticationStatus(deviceCodeResponse, client);

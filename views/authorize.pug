@@ -2,10 +2,16 @@ extends layout.pug
 
 block content
 	.container
-		ol.list-group.list-group-numbered
-			li.list-group-item Copy the following code: <strong>#{userCode}</strong>
-			li.list-group-item Go to the following url #[a(href=verificationUri target='_blank') #{verificationUri}]
-			li.list-group-item Go to the following url #[a(href=qrCode target='_blank') #{qrCode}]
+		p Click the URL to authenticate using a valid username and password.
+		p #[a(href=qrCode target='_blank') #{qrCode}]
+
+	if qrCodeComplete
+		.container.mt-5
+			.row
+				.col-md-5
+					p
+						strong Or scan the QR code below
+					img(src=qrCodeComplete)
 
 	.container.mt-5
 		.row
