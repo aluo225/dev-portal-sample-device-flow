@@ -47,9 +47,14 @@ const http = require("http").Server(app);
 const io = require("socket.io")(http);
 
 async function setupOIDC() {
-  const issuer = await Issuer.discover(
-    process.env.TENANT_URL
-  );
+  let tenantURL = process.env.TENANT_URL;
+  if(tenantURL.endsWith('/')) {
+    tenantURL = `${tenantURL}oidc/endpoint/default/.well-known/openid-configuration`
+  } else {
+    tenantURL = `${tenantURL}/oidc/endpoint/default/.well-known/openid-configuration`
+  }
+  
+  const issuer = await Issuer.discover(tenantURL);
 
   const client = new issuer.Client({
     client_id: process.env.CLIENT_ID,
