@@ -49,9 +49,9 @@ const io = require("socket.io")(http);
 async function setupOIDC() {
   let tenantURL = process.env.TENANT_URL;
   if(tenantURL.endsWith('/')) {
-    tenantURL = `${tenantURL}oidc/endpoint/default/.well-known/openid-configuration`
+    tenantURL = `${tenantURL}oauth2/.well-known/openid-configuration`
   } else {
-    tenantURL = `${tenantURL}/oidc/endpoint/default/.well-known/openid-configuration`
+    tenantURL = `${tenantURL}/oauth2/.well-known/openid-configuration`
   }
   
   const issuer = await Issuer.discover(tenantURL);
